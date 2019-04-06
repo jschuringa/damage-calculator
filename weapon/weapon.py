@@ -63,7 +63,3 @@ class Axe(Weapon):
 
 class Sword(Weapon):
     aps = 1.4
-
-axe = Axe(50, 65, 20, "fire", 10)
-print(axe.get_damage_dict(10))
-

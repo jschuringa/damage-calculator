@@ -1,0 +1,26 @@
+{% extends 'bootstrap/base.html' %}
+<a href="{{url_for('/')}}">
+
+<table class="table">
+    <tr>
+        <th scope="col"> 
+            Type
+        </th>
+        <th scope="col">
+            Minimum Damage
+        </th>
+        <th scope="col">
+            Maximum Damage
+        </th>
+        <th scope="col">
+            DPS
+        </th>
+    </tr>
+    {% for key, value in attacks %}
+    <tr>
+        <td scope="row">{{key}}</td>
+        <td>{{value["Minimum"]}}</td>
+        <td>{{value["Maximum"]}}</td>
+        <td>{{value["DPS"]}}</td>
+    </tr>
+</table>
