@@ -1,48 +1,50 @@
 {% extends 'base.html' %}
 
 {% block app_content %}
+    {% if form.errors %}
+    <ul class="errors">
+        {% for field_name, field_errors in form.errors|dictsort if field_errors %}
+            {% for error in field_errors %}
+                <li>{{ form[field_name].label }}: {{ error }}</li>
+            {% endfor %}
+        {% endfor %}
+    </ul>
+    {% endif %}
+
     <form action="{{ url_for('get_damage_information') }}" method="post">
         <h2>Weapon Information</h2>
         <div class="form-group">
-            <label for="wepTypeInput">Weapon Type</label>
-            <select class="form-control" id="wepTypeInput" name="wepType">
-                <option value="mace">Mace</option>
-                <option value="axe">Axe</option>
-                <option value="sword">Sword</option>
-            </select>
+            {{ form.wep_type.label }}
+            {{ form.wep_type(class="form-control") }}
         </div>
         <div class="form-group">
-            <label for="minDmgInput">Minimum Damage</label>
-            <input type="text" class="form-control" id="minDmgInput" name="minDmg"/>
+                {{ form.min_dmg.label }}
+                {{ form.min_dmg(class="form-control") }}
         </div>
         <div class="form-group">
-            <label for="maxDmgInput">Maximum Damage</label>
-            <input type="text" class="form-control" id="maxDmgInput" name="maxDmg"/>
+                {{ form.max_dmg.label }}
+                {{ form.max_dmg(class="form-control") }}
         </div>
         <div class="form-group">
-            <label for="wepStrInput">Weapon Strength</label>
-            <input type="text" class="form-control" id="wepStrInput" name="wepStr"/>
+                {{ form.wep_str.label }}
+                {{ form.wep_str(class="form-control") }}
         </div>
         <div class="form-group">
-            <label for="eleTypeInput">Element Type</label>
-            <select class="form-control" id="eleTypeInput" name="eleType">
-                <option value="physical">Physical</option>
-                <option value="fire">Fire</option>
-                <option value="cold">Ice</option>
-            </select>
+                {{ form.ele_type.label }}
+                {{ form.ele_type(class="form-control") }}
         </div>
         <div class="form-group">
-            <label for="eleDmgInput">Element Damage</label>
-            <input type="text" class="form-control" id="eleDmgInput" name="eleDmg"/>
+                {{ form.ele_dmg.label }}
+                {{ form.ele_dmg(class="form-control") }}
         </div>
 
         <h2>User Information</h2>
         <div class="form-group">
-            <label for="levelInput">Level</label>
-            <input type="text" class="form-control" id="levelInput" name="level"/>
+                {{ form.pc_lvl.label }}
+                {{ form.pc_lvl(class="form-control") }}
         </div>
 
-        <button type="submit" class="bnt btn-primary">Get Damage Information</button>
+        <button type="submit" class="btn btn-primary">Get Damage Information</button>
     </form>
 </div>
 {% endblock %}
