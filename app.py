@@ -35,20 +35,20 @@ def validate_min_max(form, field):
         raise ValidationError("Max damage must be greater than min damage.")
 
 def validate_ele_dmg(form, field):
-    if field.data != 0 and (field.data < 5 or field.data > 15):
+    if isinstance(field.data,int) and field.data != 0 and (field.data < 5 or field.data > 15):
         raise ValidationError("Element damage must be 0 or between 5 and 15.")
 
 class DamageForm(Form):
     wep_type = SelectField(
-        'wepType',
+        'Weapon Type',
         choices=[{"mace", "Mace"}, {"axe", "Axe"}, {"sword", "Sword"}], 
         validators=[validators.DataRequired()])
-    min_dmg = IntegerField('minDmg', [validators.DataRequired()])
-    max_dmg = IntegerField('maxDmg', [validators.DataRequired(), validate_min_max])
-    wep_str = IntegerField('wepStr', [validators.DataRequired()])
+    min_dmg = IntegerField('Minimum Damage', [validators.DataRequired()])
+    max_dmg = IntegerField('Maximum Damage', [validators.DataRequired(), validate_min_max])
+    wep_str = IntegerField('Weapon Strength', [validators.DataRequired()])
     ele_type = SelectField(
-        'eleType',
+        'Element Type',
         choices=[{"physical", "Physical"}, {"fire", "Fire"}, {"cold", "Ice"}], 
         validators=[validators.DataRequired()])
-    ele_dmg = IntegerField('eleDmg', [validators.InputRequired(), validate_ele_dmg])
-    pc_lvl = IntegerField('level', [validators.DataRequired()])
+    ele_dmg = IntegerField('Element Damage', [validators.InputRequired(), validate_ele_dmg])
+    pc_lvl = IntegerField('Character Level', [validators.DataRequired()])
