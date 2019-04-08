@@ -1,5 +1,7 @@
-{% extends 'bootstrap/base.html' %}
-<a href="{{url_for('/')}}">
+{% extends 'base.html' %}
+
+{% block app_content %}
+<a href="{{url_for('home')}}">Back to form</a>
 
 <table class="table">
     <tr>
@@ -16,11 +18,13 @@
             DPS
         </th>
     </tr>
-    {% for key, value in attacks %}
+    {% for key, value in attacks.items() %}
     <tr>
         <td scope="row">{{key}}</td>
         <td>{{value["Minimum"]}}</td>
         <td>{{value["Maximum"]}}</td>
         <td>{{value["DPS"]}}</td>
     </tr>
+    {% endfor %}
 </table>
+{% endblock %}
