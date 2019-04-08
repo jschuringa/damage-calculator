@@ -5,8 +5,8 @@ class TestCalculator(unittest.TestCase):
     def test_type_does_more_damage(self):
         axe_with_fire = weapon.Axe(10, 20, 5, "fire", 10)
         axe_without_fire = weapon.Axe(10, 20, 5, "ice", 10)
-        aws = axe_with_fire.get_smite_damage(0)
-        awos = axe_without_fire.get_smite_damage(0)
+        aws = axe_with_fire.get_attack_dict("fire", 1, 1, 1)
+        awos = axe_without_fire.get_attack_dict("fire", 1, 1, 1)
         self.assertGreater(aws, awos)
 
     def test_provided_test_case(self):

@@ -20,32 +20,17 @@ class Weapon():
     def get_damage_dict(self, pc_lvl):
         strength = (pc_lvl * 10 / 100) + (self.strength / 100)
         damageDict = {}
-        damageDict["Punch"] = self.get_punch_damage(strength)
-        damageDict["Smite"] = self.get_smite_damage(strength)
-        damageDict["Cleave"] = self.get_cleave_damage(strength)
+        damageDict["Punch"] = self.get_attack_dict("physical", 1, 1, strength)
+        damageDict["Smite"] = self.get_attack_dict("fire", .9, 1.2, strength)
+        damageDict["Cleave"] = self.get_attack_dict("ice", 1.2, .9, strength)
         return damageDict
 
-    def get_punch_damage(self, str_mod):
-        use_ele_mod = self.ele_type == "phsyical"
-        atk_min_dmg = self.get_min_dmg(str_mod, use_ele_mod)
-        atk_max_dmg = self.get_max_dmg(str_mod, use_ele_mod)
+    def get_attack_dict(self, element, dmg_mod, aps_mod, str_mod):
+        use_ele_mod = self.ele_type == element
+        atk_min_dmg = self.get_min_dmg(str_mod, use_ele_mod) * dmg_mod
+        atk_max_dmg = self.get_max_dmg(str_mod, use_ele_mod) * dmg_mod
 
-        return Weapon.build_atk_dict(atk_min_dmg, atk_max_dmg, self.get_dps(atk_min_dmg, atk_max_dmg, self.aps))
-
-    def get_smite_damage(self, str_mod):
-        use_ele_mod = self.ele_type == "fire"
-        atk_min_dmg = self.get_min_dmg(str_mod, use_ele_mod) * .9
-        atk_max_dmg = self.get_max_dmg(str_mod, use_ele_mod) * .9
-
-        return Weapon.build_atk_dict(atk_min_dmg, atk_max_dmg, self.get_dps(atk_min_dmg, atk_max_dmg, self.aps * 1.2))
-
-    def get_cleave_damage(self, str_mod):
-        use_ele_mod = self.ele_type == "ice"
-
-        atk_min_dmg = self.get_min_dmg(str_mod, use_ele_mod) * 1.2
-        atk_max_dmg = self.get_max_dmg(str_mod, use_ele_mod) * 1.2
-
-        return Weapon.build_atk_dict(atk_min_dmg, atk_max_dmg, self.get_dps(atk_min_dmg, atk_max_dmg, self.aps * .9))
+        return Weapon.build_atk_dict(atk_min_dmg, atk_max_dmg, self.get_dps(atk_min_dmg, atk_max_dmg, self.aps * aps_mod))
 
     @staticmethod
     def build_atk_dict(min_dmg, max_dmg, dps):
