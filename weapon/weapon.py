@@ -7,12 +7,6 @@ class Weapon():
         self.strength = strength
         self.ele_type = ele_type
         self.ele_mod = ele_dmg / 100
-    
-    def get_min_dmg(self, str_mod, use_ele_mod):
-        return self.min_dmg * (self.ele_mod + str_mod) if use_ele_mod else self.min_dmg * str_mod
-
-    def get_max_dmg(self, str_mod, use_ele_mod):
-        return self.max_dmg * (self.ele_mod + str_mod) if use_ele_mod else self.max_dmg * str_mod
 
     def get_damage_dict(self, pc_lvl):
         strength = (pc_lvl * 10 / 100) + (self.strength / 100)
@@ -23,12 +17,16 @@ class Weapon():
         return damageDict
 
     def get_attack_dict(self, element, dmg_mod, aps_mod, str_mod):
-        use_ele_mod = self.ele_type == element
-        atk_min_dmg = self.get_min_dmg(str_mod, use_ele_mod) * dmg_mod
-        atk_max_dmg = self.get_max_dmg(str_mod, use_ele_mod) * dmg_mod
-        dps = atk_min_dmg + atk_max_dmg / 2 * (self.aps * aps_mod)
+        use_ele_mod = self.ele_type == element and self.ele_mod > 0
+        atk_min_dmg = Weapon.get_damage(self.min_dmg, str_mod, dmg_mod, self.ele_mod, use_ele_mod)
+        atk_max_dmg = Weapon.get_damage(self.max_dmg, str_mod, dmg_mod, self.ele_mod, use_ele_mod)
+        dps = (atk_min_dmg + atk_max_dmg) / 2 * (self.aps * aps_mod)
 
         return Weapon.build_atk_dict(atk_min_dmg, atk_max_dmg, dps)
+
+    @staticmethod
+    def get_damage(dmg, str_mod, dmg_mod, ele_mod, use_ele_mod):
+        return (dmg * (ele_mod + str_mod) if use_ele_mod else dmg * str_mod) * dmg_mod
 
     @staticmethod
     def build_atk_dict(min_dmg, max_dmg, dps):

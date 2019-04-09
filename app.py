@@ -41,14 +41,14 @@ def validate_ele_dmg(form, field):
 class DamageForm(Form):
     wep_type = SelectField(
         'Weapon Type',
-        choices=[{"mace", "Mace"}, {"axe", "Axe"}, {"sword", "Sword"}], 
+        choices=[("mace", "Mace"), ("axe", "Axe"), ("sword", "Sword")], 
         validators=[validators.DataRequired()])
     min_dmg = IntegerField('Minimum Damage', [validators.DataRequired()])
     max_dmg = IntegerField('Maximum Damage', [validators.DataRequired(), validate_min_max])
     wep_str = IntegerField('Weapon Strength', [validators.DataRequired()])
     ele_type = SelectField(
         'Element Type',
-        choices=[{"physical", "Physical"}, {"fire", "Fire"}, {"cold", "Ice"}], 
+        choices=[("physical", "Physical"), ("fire", "Fire"), ("ice", "Ice")], 
         validators=[validators.DataRequired()])
     ele_dmg = IntegerField('Element Damage', [validators.InputRequired(), validate_ele_dmg])
     pc_lvl = IntegerField('Character Level', [validators.DataRequired()])
